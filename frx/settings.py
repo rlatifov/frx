@@ -16,6 +16,7 @@ SECRET_KEY = 'django-insecure-02lx%31d+5kq#kipx=a1_fu2&(_9i#+&ieqh2n3$meb5fejoil
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://*.alisolutions.az']
 
 # Application definition
 
