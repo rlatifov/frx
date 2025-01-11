@@ -1,0 +1,194 @@
+[
+  {
+    "model": "pairs.pair",
+    "pk": 1,
+    "fields": {
+      "name": "EUR/USD",
+      "created_at": "2025-01-11T00:44:38.375"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 2,
+    "fields": {
+      "name": "USD/JPY",
+      "created_at": "2025-01-11T00:44:38.376"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 3,
+    "fields": {
+      "name": "GBP/USD",
+      "created_at": "2025-01-11T00:44:38.377"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 4,
+    "fields": {
+      "name": "USD/CHF",
+      "created_at": "2025-01-11T00:44:38.377"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 5,
+    "fields": {
+      "name": "AUD/USD",
+      "created_at": "2025-01-11T00:44:38.378"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 6,
+    "fields": {
+      "name": "USD/CAD",
+      "created_at": "2025-01-11T00:44:38.378"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 7,
+    "fields": {
+      "name": "NZD/USD",
+      "created_at": "2025-01-11T00:44:38.378"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 8,
+    "fields": {
+      "name": "EUR/GBP",
+      "created_at": "2025-01-11T00:44:38.379"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 9,
+    "fields": {
+      "name": "EUR/JPY",
+      "created_at": "2025-01-11T00:44:38.379"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 10,
+    "fields": {
+      "name": "GBP/JPY",
+      "created_at": "2025-01-11T00:44:38.380"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 11,
+    "fields": {
+      "name": "AUD/JPY",
+      "created_at": "2025-01-11T00:44:38.380"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 12,
+    "fields": {
+      "name": "NZD/JPY",
+      "created_at": "2025-01-11T00:44:38.381"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 13,
+    "fields": {
+      "name": "CHF/JPY",
+      "created_at": "2025-01-11T00:44:38.381"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 14,
+    "fields": {
+      "name": "EUR/AUD",
+      "created_at": "2025-01-11T00:44:38.382"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 15,
+    "fields": {
+      "name": "EUR/NZD",
+      "created_at": "2025-01-11T00:44:38.382"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 16,
+    "fields": {
+      "name": "EUR/CHF",
+      "created_at": "2025-01-11T00:44:38.382"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 17,
+    "fields": {
+      "name": "GBP/AUD",
+      "created_at": "2025-01-11T00:44:38.383"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 18,
+    "fields": {
+      "name": "GBP/NZD",
+      "created_at": "2025-01-11T00:44:38.383"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 19,
+    "fields": {
+      "name": "AUD/CHF",
+      "created_at": "2025-01-11T00:44:38.383"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 20,
+    "fields": {
+      "name": "CAD/JPY",
+      "created_at": "2025-01-11T00:44:38.384"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 21,
+    "fields": {
+      "name": "NZD/CAD",
+      "created_at": "2025-01-11T00:44:38.384"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 22,
+    "fields": {
+      "name": "USD/SEK",
+      "created_at": "2025-01-11T00:44:38.385"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 23,
+    "fields": {
+      "name": "USD/NOK",
+      "created_at": "2025-01-11T00:44:38.385"
+    }
+  },
+  {
+    "model": "pairs.pair",
+    "pk": 24,
+    "fields": {
+      "name": "USD/SGD",
+      "created_at": "2025-01-11T00:44:38.386"
+    }
+  }
+]
