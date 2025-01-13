@@ -139,8 +139,10 @@ def compare_pair_prices(pair_name, price):
 
     pair = Pair.objects.get(name=pair_name)
     price = Decimal(price)
-    yesterday = datetime.now().date() - timedelta(days=1)
-    yesterday_rate = pair.rates.filter(date=yesterday).first()
+    yesterday_or_saturday = datetime.now().date() - timedelta(days=1)
+    if yesterday_or_saturday.weekday() == 6:
+        yesterday_or_saturday = yesterday_or_saturday - timedelta(days=1)
+    yesterday_rate = pair.rates.filter(date=yesterday_or_saturday).first()
 
     z2, z2_low = calculate_zones(yesterday_rate.high, yesterday_rate.low, yesterday_rate.close)
 
