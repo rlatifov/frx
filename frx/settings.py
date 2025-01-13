@@ -15,8 +15,8 @@ SECRET_KEY = 'django-insecure-02lx%31d+5kq#kipx=a1_fu2&(_9i#+&ieqh2n3$meb5fejoil
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://*.alisolutions.az']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=lambda v: [s.strip() for s in v.split(',')])
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='*', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
 
