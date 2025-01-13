@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 
 @celery.task(name='get_time_series_from_twelvedata', bind=True)
 def get_time_series_from_twelvedata(self):
-    if not working_hours():
-        raise Ignore('Not working hours. Skipping task')
+    # if not working_hours():
+    #     raise Ignore('Not working hours. Skipping task')
 
     split_size = 4
     yesterday_or_saturday = datetime.now().date() - timedelta(days=1)
