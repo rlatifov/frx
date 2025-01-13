@@ -23,9 +23,12 @@ def get_time_series_from_twelvedata(self):
         raise Ignore('Not working hours. Skipping task')
 
     split_size = 4
-    yesterday = datetime.now().date() - timedelta(days=1)
+    yesterday_or_saturday = datetime.now().date() - timedelta(days=1)
+    if yesterday_or_saturday.weekday() == 6:
+        yesterday_or_saturday = yesterday_or_saturday - timedelta(days=1)
+
     symbols = Pair.objects.exclude(
-        rates__date=yesterday).distinct().values_list('name', flat=True)[:split_size]
+        rates__date=yesterday_or_saturday).distinct().values_list('name', flat=True)[:split_size]
     is_single_symbol = len(symbols) == 1
 
     if not symbols:
@@ -41,13 +44,12 @@ def get_time_series_from_twelvedata(self):
             outputsize=2
         ).as_json()
 
-        yesterday = datetime.now().date() - timedelta(days=1)
         if is_single_symbol:
             pair_name = ','.join(symbols)
             pair, created = Pair.objects.update_or_create(name=pair_name, defaults={'name': pair_name})
             for row in time_series:
                 date = datetime.strptime(row['datetime'], '%Y-%m-%d').date()
-                if date == yesterday:
+                if date == yesterday_or_saturday:
                     logger.info(f"Updating rates for {pair_name} on {date}")
                     Rate.objects.update_or_create(
                         date=date,
@@ -64,7 +66,7 @@ def get_time_series_from_twelvedata(self):
                 pair, created = Pair.objects.update_or_create(name=pair_name, defaults={'name': pair_name})
                 for row in pair_data:
                     date = datetime.strptime(row['datetime'], '%Y-%m-%d').date()
-                    if date == yesterday:
+                    if date == yesterday_or_saturday:
                         logger.info(f"Updating rates for {pair_name} on {date}")
                         Rate.objects.update_or_create(
                             date=date,
@@ -90,11 +92,13 @@ def get_prices_from_twelvedata(self):
 
     split_size = 4
     thirty_minutes_before = datetime.now() - timedelta(minutes=30)
-    yesterday = datetime.now().date() - timedelta(days=1)
+    yesterday_or_saturday = datetime.now().date() - timedelta(days=1)
+    if yesterday_or_saturday.weekday() == 6:
+        yesterday_or_saturday = yesterday_or_saturday - timedelta(days=1)
 
     symbols = Pair.objects.exclude(
         prices__checked_at__gte=thirty_minutes_before
-    ).filter(rates__date=yesterday).distinct().values_list('name', flat=True)[:split_size]
+    ).filter(rates__date=yesterday_or_saturday).distinct().values_list('name', flat=True)[:split_size]
 
     is_single_symbol = len(symbols) == 1
 
