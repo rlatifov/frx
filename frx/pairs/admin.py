@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from frx.pairs.models import Pair, Rate, Price
+from frx.pairs.models import Pair, Rate, Price, LastNotification
 
 
 class PriceAdmin(admin.ModelAdmin):
@@ -29,6 +29,20 @@ class RateAdmin(admin.ModelAdmin):
         return obj.date.strftime('%d.%m.%Y')
 
 
+class LastNotificationAdmin(admin.ModelAdmin):
+    fields = ('pair', 'notification_type', 'date', 'created_at')
+    list_display = ('pair', 'notification_type', 'date_str')
+    list_filter = ('pair', 'notification_type', 'date')
+    search_fields = ('pair__name', 'notification_type')
+    readonly_fields = ('created_at',)
+    ordering = ('-created_at',)
+
+    @admin.display(description='Date')
+    def date_str(self, obj):
+        return obj.date.strftime('%d.%m.%Y')
+
+
 admin.site.register(Pair)
+admin.site.register(LastNotification, LastNotificationAdmin)
 admin.site.register(Rate, RateAdmin)
 admin.site.register(Price, PriceAdmin)
