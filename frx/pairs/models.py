@@ -33,3 +33,18 @@ class Price(models.Model):
 
     def __str__(self):
         return f'{self.pair} - {self.price}'
+
+
+class LastNotification(models.Model):
+    class NotificationTypeEnum(models.TextChoices):
+        Z2 = 'Z2', 'Z2'
+        Z2_LOW = 'Z2_LOW', 'Z2_LOW'
+
+    pair = models.ForeignKey(
+        Pair, to_field='name', on_delete=models.DO_NOTHING, related_name='notifications', null=False, blank=False)
+    notification_type = models.CharField(choices=NotificationTypeEnum.choices, max_length=255, null=False, blank=False)
+    date = models.DateField(default=datetime.now, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.pair} - {self.notification_type} - {self.date}'

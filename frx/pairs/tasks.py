@@ -8,7 +8,7 @@ from celery.exceptions import Ignore
 
 from frx.celery import app as celery
 from frx.pairs.logic import working_hours
-from frx.pairs.models import Pair, Rate, Price
+from frx.pairs.models import Pair, Rate, Price, LastNotification
 from frx.settings import TWELVEDATA_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 
 from twelvedata import TDClient
@@ -146,15 +146,34 @@ def compare_pair_prices(pair_name, price):
 
     z2, z2_low = calculate_zones(yesterday_rate.high, yesterday_rate.low, yesterday_rate.close)
 
-    msg = None
     if price > z2:
-        msg = f"🚨 {pair_name} crossed above Z2: {z2:.5f}. Current price: {price:.5f}"
+        if not LastNotification.objects.filter(
+                pair=pair,
+                notification_type=LastNotification.NotificationTypeEnum.Z2,
+                date=datetime.now().date()).exists():
+            LastNotification.objects.update_or_create(
+                pair=pair,
+                date=datetime.now().date(),
+                defaults={"notification_type": LastNotification.NotificationTypeEnum.Z2})
+            msg = f"🚨 {pair_name} crossed above Z2: {z2:.5f}. Current price: {price:.5f}"
+            logger.info(msg)
+            send_telegram_message.delay(msg)
+        else:
+            logger.info(f"Already reported: {pair_name} crossed above Z2: {z2:.5f}. Current price: {price:.5f}")
     elif price < z2_low:
-        msg = f"🚨 {pair_name} dropped below Z2_low: {z2_low:.5f}. Current price: {price:.5f}"
-
-    if msg:
-        logger.info(msg)
-        send_telegram_message.delay(msg)
+        if not LastNotification.objects.filter(
+                pair=pair,
+                notification_type=LastNotification.NotificationTypeEnum.Z2_LOW,
+                date=datetime.now().date()).exists():
+            LastNotification.objects.update_or_create(
+                pair=pair,
+                date=datetime.now().date(),
+                defaults={"notification_type": LastNotification.NotificationTypeEnum.Z2_LOW})
+            msg = f"🚨 {pair_name} dropped below Z2_low: {z2_low:.5f}. Current price: {price:.5f}"
+            logger.info(msg)
+            send_telegram_message.delay(msg)
+        else:
+            logger.info(f"Already reported: {pair_name} dropped below Z2_low: {z2_low:.5f}. Current price: {price:.5f}")
 
 
 @celery.task(name='send_telegram_message')
