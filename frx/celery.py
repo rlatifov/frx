@@ -58,7 +58,7 @@ app.conf.beat_schedule = {
 
 
 class BaseTask(Task):
-    max_retries = 5
+    max_retries = 1
     autoretry_for = (Exception,)
     default_retry_delay = 60 * 5  # 5 minutes
     # Setting retry_backoff=True adds an exponential backoff delay between retries,
