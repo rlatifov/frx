@@ -17,7 +17,7 @@ from telegram import Bot
 logger = logging.getLogger(__name__)
 
 
-@celery.task(name='get_time_series_from_twelvedata', bind=True)
+@celery.task(name='get_time_series_from_twelvedata', bind=True, max_retries=1)
 def get_time_series_from_twelvedata(self):
     # if not working_hours():
     #     raise Ignore('Not working hours. Skipping task')
@@ -85,7 +85,7 @@ def get_time_series_from_twelvedata(self):
         self.retry(countdown=120)
 
 
-@celery.task(name='get_prices_from_twelvedata', bind=True)
+@celery.task(name='get_prices_from_twelvedata', bind=True, max_retries=1)
 def get_prices_from_twelvedata(self):
     if not working_hours():
         raise Ignore('Not working hours. Skipping task')
@@ -127,7 +127,7 @@ def get_prices_from_twelvedata(self):
         self.retry(countdown=120)
 
 
-@celery.task(name='compare_pair_prices')
+@celery.task(name='compare_pair_prices', max_retries=1)
 def compare_pair_prices(pair_name, price):
     logger.info(f"Comparing pair prices for {pair_name} with price: {price}")
 
@@ -176,7 +176,7 @@ def compare_pair_prices(pair_name, price):
             logger.info(f"Already reported: {pair_name} dropped below Z2_low: {z2_low:.5f}. Current price: {price:.5f}")
 
 
-@celery.task(name='send_telegram_message')
+@celery.task(name='send_telegram_message', max_retries=1)
 def send_telegram_message(message):
     logger.info(f"Sending message to Telegram chat: {message}")
 
