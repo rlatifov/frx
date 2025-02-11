@@ -4,6 +4,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV TZ=Asia/Baku
 
+RUN apt-get update -y
+RUN apt-get upgrade -y
 RUN apt-get update --allow-releaseinfo-change
 RUN apt-get install nano iputils-ping curl gettext -y
 
