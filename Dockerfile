@@ -6,8 +6,11 @@ ENV TZ=Asia/Baku
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get update --allow-releaseinfo-change
-RUN apt-get install nano iputils-ping curl gettext -y
+RUN echo "deb http://deb.debian.org/debian bookworm main" > /etc/apt/sources.list \
+    && echo "deb http://security.debian.org/debian-security bookworm-security main" >> /etc/apt/sources.list \
+    && echo "deb http://deb.debian.org/debian bookworm-updates main" >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y nano iputils-ping curl gettext
 
 FROM python_3_12 as app_enviroment
 
