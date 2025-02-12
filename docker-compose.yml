@@ -1,11 +1,11 @@
 version: '3.8'
 
 networks:
-  custom_network:
+  frx_network:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.100.0/24  # Change this subnet if it still conflicts
+        - subnet: 192.168.114.0/24  # Change this subnet if it still conflicts
 
 services:
   postgres:
@@ -26,8 +26,8 @@ services:
       options:
         max-size: "10m"
     networks:
-      custom_network:
-        ipv4_address: 192.168.100.2
+      frx_network:
+        ipv4_address: 192.168.114.2
 
   nginx:
     image: nginx:latest
@@ -41,8 +41,8 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ${LOG_FOLDER_ROOT}/nginx:/var/log/nginx
     networks:
-      custom_network:
-        ipv4_address: 192.168.100.3
+      frx_network:
+        ipv4_address: 192.168.114.3
 
   app:
     env_file:
@@ -66,8 +66,8 @@ services:
       options:
         max-size: "10m"
     networks:
-      custom_network:
-        ipv4_address: 192.168.100.4
+      frx_network:
+        ipv4_address: 192.168.114.4
 
   celery:
     image: "monitoring"
@@ -92,11 +92,11 @@ services:
       options:
         max-size: "10m"
     networks:
-      custom_network:
-        ipv4_address: 192.168.100.5
+      frx_network:
+        ipv4_address: 192.168.114.5
 
   redis:
     image: redis:latest
     networks:
-      custom_network:
-        ipv4_address: 192.168.100.6
+      frx_network:
+        ipv4_address: 192.168.114.6
