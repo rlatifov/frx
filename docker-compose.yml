@@ -33,6 +33,9 @@ services:
   app:
     env_file:
       - .env
+    dns:
+     - 8.8.8.8
+     - 4.4.4.4
     build:
       context: .
       dockerfile: Dockerfile
@@ -55,6 +58,9 @@ services:
       - .env
     environment:
       - C_FORCE_ROOT=true
+    dns:
+     - 8.8.8.8
+     - 4.4.4.4
     restart: always
     hostname: celery
     entrypoint: celery
