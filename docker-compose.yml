@@ -1,5 +1,13 @@
-services:
+version: '3.8'
 
+networks:
+  custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24  # Change this subnet if it still conflicts
+
+services:
   postgres:
     image: postgres:latest
     env_file:
@@ -17,6 +25,9 @@ services:
       driver: "json-file"
       options:
         max-size: "10m"
+    networks:
+      custom_network:
+        ipv4_address: 192.168.100.2
 
   nginx:
     image: nginx:latest
@@ -29,13 +40,16 @@ services:
       - ./static:/var/www/html/static
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ${LOG_FOLDER_ROOT}/nginx:/var/log/nginx
+    networks:
+      custom_network:
+        ipv4_address: 192.168.100.3
 
   app:
     env_file:
       - .env
     dns:
-     - 8.8.8.8
-     - 4.4.4.4
+      - 8.8.8.8
+      - 4.4.4.4
     build:
       context: .
       dockerfile: Dockerfile
@@ -51,6 +65,9 @@ services:
       driver: "json-file"
       options:
         max-size: "10m"
+    networks:
+      custom_network:
+        ipv4_address: 192.168.100.4
 
   celery:
     image: "monitoring"
@@ -59,8 +76,8 @@ services:
     environment:
       - C_FORCE_ROOT=true
     dns:
-     - 8.8.8.8
-     - 4.4.4.4
+      - 8.8.8.8
+      - 4.4.4.4
     restart: always
     hostname: celery
     entrypoint: celery
@@ -74,6 +91,12 @@ services:
       driver: "json-file"
       options:
         max-size: "10m"
+    networks:
+      custom_network:
+        ipv4_address: 192.168.100.5
 
   redis:
     image: redis:latest
+    networks:
+      custom_network:
+        ipv4_address: 192.168.100.6
